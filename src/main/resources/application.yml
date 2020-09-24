@@ -1,0 +1,67 @@
+#服务配置
+server:
+  port: 8080
+  servlet:
+    context-path: /demo
+
+spring:
+  #数据库配置
+  datasource:
+    username: pay_sas_testrw
+    password: XhyTest@2019
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://10.32.16.112:5721/pay_sas?useUnicode=true&zeroDateTimeBehavior=convertToNull&amp;characterEncoding=UTF-8
+    #阿里druid连接池驱动配置信息
+    type: com.alibaba.druid.pool.DruidDataSource
+    #连接池的配置信息
+    druid:
+      #初始化大小，最小，最大
+      initial-size: 2
+
+  #redis配置
+  redis:
+    host: redis-master.sit.blackfi.sh
+    port: 6379
+    password:
+    timeout: 10000
+    maxTotal: 8
+
+
+
+#  # kafka配置
+#  kafka:
+#    bootstrap-servers: kafka.sit.blackfi.sh:9092
+#    producer:
+#      retries: 0
+#      batch.size: 40960
+#      linger: 1
+#      buffer.memory: 40960
+#    consumer:
+#      enable.auto.commit: true
+#      session.timeout: 6000
+#      auto.commit.interval: 100
+#      auto.offset.reset: latest
+#      topic: test
+#      group.id: test
+#      concurrency: 10
+
+
+
+mapper:
+  mappers:
+    - tk.mybatis.mapper.common.Mapper
+  not-empty: true
+  identity: MYSQL
+  style: normal
+  wrap-keyword: "`{0}`"
+
+#ActiveMQ
+ActiveMQ:
+  queueName: test-queue
+  queueName2: test-queue2
+  queueName3: test-queue3
+  topicName: test-topic
+  topicName2: test-topic2
+
+
+
