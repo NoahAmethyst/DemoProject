@@ -2,11 +2,11 @@ package com.boot_demo.demo1.test;
 
 import org.apache.beam.sdk.Pipeline;
 import org.apache.beam.sdk.coders.StringUtf8Coder;
+import org.apache.beam.sdk.io.TextIO;
 import org.apache.beam.sdk.options.PipelineOptions;
 import org.apache.beam.sdk.options.PipelineOptionsFactory;
-import org.apache.beam.sdk.transforms.Create;
-import org.apache.beam.sdk.transforms.DoFn;
-import org.apache.beam.sdk.transforms.ParDo;
+import org.apache.beam.sdk.transforms.*;
+import org.apache.beam.sdk.values.KV;
 import org.apache.beam.sdk.values.PCollection;
 import org.junit.Test;
 
@@ -25,10 +25,10 @@ public class BeamSimpleTest {
                 "Or to take arms against a sea of troubles, ");
 
         //创建一个管道Pipeline
-        PipelineOptions pipe= PipelineOptionsFactory.create();
+        PipelineOptions pipe = PipelineOptionsFactory.create();
         //设置Runtime类型，当我们不指定的时候，会默认使用DirectRunner这种类型
 //         pipe.setRunner(DirectRunner.class);
-        Pipeline pipeline= Pipeline.create(pipe);
+        Pipeline pipeline = Pipeline.create(pipe);
 
         //使用原始数据创建数据集
         //PCollection表示Beam中任何大小的输入和输出数据。pipeLine读取数据输入，生成PCollection作为输出
@@ -40,8 +40,9 @@ public class BeamSimpleTest {
         //apply方法转化管道中的数据，转换采用PCollection（或多个PCollection）作为输入，在该集合中的每个元素上执行指定的操作，并生成新的输出PCollection
         //转换格式：[Output PCollection] = [Input PCollection].apply([Transform])
         PCollection<Integer> wordLengths = words.apply(
-                "ComputeWordLengths",  ParDo.of(new ComputeWordLengthFn()));
+                "ComputeWordLengths", ParDo.of(new ComputeWordLengthFn()));
 
+        System.out.println(wordLengths.getName());
         pipeline.run().waitUntilFinish();
 
     }
@@ -59,4 +60,76 @@ public class BeamSimpleTest {
             c.output(word.length());
         }
     }
+
+
+    @Test
+    public void test() {
+        getDataFromFile();
+    }
+
+    public static void getDataFromFile() {
+        // Create the pipeline.
+        PipelineOptions options =
+                PipelineOptionsFactory.create();
+        Pipeline p = Pipeline.create(options);
+
+        PCollection<String> lines = p.apply(TextIO.read().from("pom.xml"));
+
+        lines.apply(new CountWords()) //返回一个Map<String, Long>
+                .apply(MapElements.via(new FormatAsTextFn())) //返回一个PCollection<String>
+                .apply("WriteCounts", TextIO.write().to("test.txt"));
+
+        p.run().waitUntilFinish();
+    }
+
+
+    public static class CountWords extends PTransform<PCollection<String>,
+            PCollection<KV<String, Long>>> {
+        @Override
+        public PCollection<KV<String, Long>> expand(PCollection<String> lines) {
+
+            // 将文本行转换成单个单词
+            PCollection<String> words = lines.apply(
+                    ParDo.of(new ExtractWordsFn()));
+
+            // 计算每个单词次数
+            PCollection<KV<String, Long>> wordCounts =
+                    words.apply(Count.<String>perElement());
+
+            return wordCounts;
+        }
+    }
+
+    /**
+     * 1.a.通过Dofn编程Pipeline使得代码很简洁。b.对输入的文本做单词划分，输出。
+     */
+    static class ExtractWordsFn extends DoFn<String, String> {
+
+        @ProcessElement
+        public void processElement(ProcessContext c) {
+            if (c.element().trim().isEmpty()) {
+                return;
+            }
+            // 将文本行划分为单词
+            String[] words = c.element().split("[^a-zA-Z']+");
+            // 输出PCollection中的单词
+            for (String word : words) {
+                if (!word.isEmpty()) {
+                    c.output(word);
+                }
+            }
+        }
+    }
+
+    /**
+     * 2.格式化输入的文本数据，将转换单词为并计数的打印字符串。
+     */
+    public static class FormatAsTextFn extends SimpleFunction<KV<String, Long>, String> {
+        @Override
+        public String apply(KV<String, Long> input) {
+            System.out.println(input.getKey() + ": " + input.getValue());
+            return input.getKey() + ": " + input.getValue();
+        }
+    }
+
 }
