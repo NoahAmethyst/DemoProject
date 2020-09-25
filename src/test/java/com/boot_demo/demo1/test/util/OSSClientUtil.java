@@ -29,9 +29,9 @@ public class OSSClientUtil {
     public static String uploadFile(String fileName, String content) {
 
         try {
-            endpoint = "http://oss-cn-hongkong.aliyuncs.com";
-            accessKeyId = "LTAI4G898J1ZrgpfbxEtXLD1";
-            accessKeySecret = "BtMGLgNmFuSZp58oE2Bq0II4v89sQZ";
+            endpoint = "http://****.aliyuncs.com";
+            accessKeyId = "*****";
+            accessKeySecret = "*****";
 
             OSS ossClient = new OSSClientBuilder().build(endpoint, accessKeyId, accessKeySecret);
 
