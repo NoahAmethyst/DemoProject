@@ -6,8 +6,11 @@ import org.apache.beam.sdk.io.TextIO;
 import org.apache.beam.sdk.options.PipelineOptions;
 import org.apache.beam.sdk.options.PipelineOptionsFactory;
 import org.apache.beam.sdk.transforms.*;
+import org.apache.beam.sdk.transforms.windowing.FixedWindows;
+import org.apache.beam.sdk.transforms.windowing.Window;
 import org.apache.beam.sdk.values.KV;
 import org.apache.beam.sdk.values.PCollection;
+import org.joda.time.Duration;
 import org.junit.Test;
 
 import java.util.Arrays;
@@ -43,8 +46,7 @@ public class BeamSimpleTest {
                 "ComputeWordLengths", ParDo.of(new ComputeWordLengthFn()));
 
         System.out.println(wordLengths.getName());
-        pipeline.run().waitUntilFinish();
-
+        pipeline.run();
     }
 
     /**
@@ -77,6 +79,8 @@ public class BeamSimpleTest {
 
         lines.apply(new CountWords()) //返回一个Map<String, Long>
                 .apply(MapElements.via(new FormatAsTextFn())) //返回一个PCollection<String>
+
+                .apply(Window.into(FixedWindows.of(Duration.standardSeconds(10))))
                 .apply("WriteCounts", TextIO.write().to("test.txt"));
 
         p.run().waitUntilFinish();
