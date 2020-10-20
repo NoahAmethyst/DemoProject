@@ -9,6 +9,9 @@ import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -23,8 +26,8 @@ public class TestDemo {
 
 
     @Test
-    public  void syncTest(){
-        for (int i=0;i<10;i++){
+    public void syncTest() {
+        for (int i = 0; i < 10; i++) {
             counterService.addCounter(1);
             System.out.println(counterService.statistCount());
         }
@@ -32,7 +35,7 @@ public class TestDemo {
 
 
     @Test
-    public void asynTest(){
+    public void asynTest() {
         System.out.println("这是一个异步测试，这里是开始");
         ticketService.sellTicket(5);
         System.out.println("异步测试结束");
@@ -42,6 +45,7 @@ public class TestDemo {
             e.printStackTrace();
         }
     }
+
 
 
 

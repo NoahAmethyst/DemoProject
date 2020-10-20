@@ -1,17 +1,9 @@
 package com.boot_demo.demo1.test;
 
-import org.apache.beam.sdk.Pipeline;
-import org.apache.beam.sdk.coders.StringUtf8Coder;
-import org.apache.beam.sdk.options.PipelineOptions;
-import org.apache.beam.sdk.options.PipelineOptionsFactory;
-import org.apache.beam.sdk.transforms.Create;
-import org.apache.beam.sdk.transforms.DoFn;
-import org.apache.beam.sdk.transforms.ParDo;
-import org.apache.beam.sdk.values.PCollection;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.junit.Test;
 
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class SimpleTestDemo {
@@ -27,6 +19,17 @@ public class SimpleTestDemo {
 
     }
 
+    @Test
+    public void listTest() {
+        List<String> list = null;
+//        for (int i = 0; i < 10; i++) {
+//            list.add(i + "");
+//        }
+        Collections.shuffle(list);
+//        for (String s : list) {
+//            System.out.println(s);
+//        }
+    }
 
     /**
      * Md5encode
