@@ -1,15 +1,15 @@
 package com.boot_demo.demo1.test;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.junit.Test;
 
-import java.util.Collections;
-import java.util.List;
-
+@Slf4j
 public class SimpleTestDemo {
 
-
-
+    @Test
+    public void simpleTest() {
+    }
 
 
     @Test
@@ -21,14 +21,14 @@ public class SimpleTestDemo {
 
     @Test
     public void listTest() {
-        List<String> list = null;
-//        for (int i = 0; i < 10; i++) {
-//            list.add(i + "");
-//        }
-        Collections.shuffle(list);
-//        for (String s : list) {
-//            System.out.println(s);
-//        }
+        try {
+
+            int i = 1 / 0;
+            System.out.println(i);
+            System.out.println("this is a test");
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     /**

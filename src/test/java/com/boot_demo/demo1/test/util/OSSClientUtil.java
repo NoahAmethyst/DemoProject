@@ -17,13 +17,13 @@ public class OSSClientUtil {
     private static String accessKeyId;
     private static String accessKeySecret;
 
-    private static final String BUCKET_NAME = "blackfish-hkcdn";
-    private static final String BASE_LINK_URL = "https://blackfish-hkcdn.oss-cn-hongkong.aliyuncs.com/";
-    private static final String ROOT = "price-club/";
+    private static final String BUCKET_NAME = "BUCKET_NAME";
+    private static final String BASE_LINK_URL = "BASE_LINK_URL";
+    private static final String ROOT = "ROOT/";
 
-    public static final String HEAD_IMG_ROOT = "user-head-img/";
+    public static final String HEAD_IMG_ROOT = "HEAD_IMG_ROOT";
 
-    public static final String COUPON_PATH = "icons/coupon_merchant/";
+    public static final String COUPON_PATH = "COUPON_PATH";
 
 
     public static String uploadFile(String fileName, String content) {

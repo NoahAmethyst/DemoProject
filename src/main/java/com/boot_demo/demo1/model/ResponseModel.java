@@ -15,6 +15,10 @@ public class ResponseModel {
 
     private Object data;
 
+    public static ResponseModel buildSuccess() {
+        return buildSuccess(null);
+    }
+
     public static ResponseModel buildSuccess(Object data) {
         return ResponseModel.builder()
                 .status(HttpStatus.OK.value())

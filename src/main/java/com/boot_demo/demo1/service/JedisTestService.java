@@ -1,4 +1,4 @@
-package com.boot_demo.demo1.service.impl;
+package com.boot_demo.demo1.service;
 
 import com.boot_demo.demo1.utils.JsonUtil;
 import com.fasterxml.jackson.core.type.TypeReference;

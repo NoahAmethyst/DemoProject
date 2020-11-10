@@ -26,6 +26,9 @@ spring:
     timeout: 10000
     maxTotal: 8
 
+#udp配置
+udp:
+  port:8080
 
 
 #  # kafka配置

@@ -1,10 +1,13 @@
 package com.boot_demo.demo1.controller;
 
+import com.boot_demo.demo1.delay.DelayQueueManager;
+import com.boot_demo.demo1.delay.TaskElement;
 import com.boot_demo.demo1.model.ResponseModel;
 import com.boot_demo.demo1.service.CounterService;
 import com.boot_demo.demo1.service.EntityDemoService;
-import com.boot_demo.demo1.service.impl.ExcelOptionsService;
-import com.boot_demo.demo1.service.impl.JedisTestService;
+import com.boot_demo.demo1.service.ExcelOptionsService;
+import com.boot_demo.demo1.service.JedisTestService;
+import com.boot_demo.demo1.utils.RedisUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
@@ -22,7 +25,7 @@ import java.util.List;
  * @date 2020/3/91:09 下午
  */
 @RestController
-@RequestMapping("test")
+@RequestMapping("/test")
 @Slf4j
 public class TestController {
 
@@ -41,6 +44,12 @@ public class TestController {
     @Resource
     private EntityDemoService entityDemoService;
 
+    @Resource
+    private RedisUtil redisUtil;
+
+    @Resource
+    private DelayQueueManager delayQueueManager;
+
     @Value("${ActiveMQ.queueName}")
     private String queueName;
 
@@ -50,6 +59,11 @@ public class TestController {
     @Value("${ActiveMQ.topicName}")
     private String topicName;
 
+
+    @GetMapping("/hello")
+    public ResponseModel fetchDemo() {
+        return ResponseModel.buildSuccess("hello");
+    }
 
     @GetMapping("/fetchDemo")
     public ResponseModel fetchDemo(String id) {
@@ -97,5 +111,12 @@ public class TestController {
         return responseModel;
     }
 
+    @GetMapping(value = "/delayQueue")
+    public ResponseModel delayQueue() {
+        for (int i = 0; i < 10; i++) {
+            delayQueueManager.put(new TaskElement("this is element:" + i));
+        }
+        return ResponseModel.buildSuccess();
+    }
 
 }
