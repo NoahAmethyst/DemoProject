@@ -4,31 +4,40 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.junit.Test;
 
+import java.util.*;
+
 @Slf4j
 public class SimpleTestDemo {
 
     @Test
     public void simpleTest() {
+        String value = "dz0WsVKYiEyvtoZ2Iat19u:APA91bE-uZ6jcRSRMGrlRsyKsnZbpYYmGgaae5VbjfpwOrAXUch3TOmBIUVe4m6OfF7wWhjjd-9cNBr2UnPAALrLZTs_9Rbpzjw-SbaOwOtGTkgLuXo6xZkHT-Gt6wv760vlkMq8PXPi";
+        String value2 = "dz0WsVKYiEyvtoZ2Iat19u:APA91bE-uZ6jcRSRMGrlRsyKsnZbpYYmGgaae5VbjfpwOrAXUch3TOmBIUVe4m6OfF7wWhjjd-9cNBr2UnPAALrLZTs_9Rbpzjw-SbaOwOtGTkgLuXo6xZkHT-Gt6wv760vlkMq8PXPi";
+        System.out.println(value.equals(value2));
     }
 
 
     @Test
     public void md5Test() {
-        String encodeStr = md5Encode("6007720555994071425c3548981ad0e23c8bd4203b7051abe7b420092218540713760");
+        String encodeStr = md5Encode("2001");
         System.out.println(encodeStr);
-
     }
 
     @Test
     public void listTest() {
-        try {
-
-            int i = 1 / 0;
-            System.out.println(i);
-            System.out.println("this is a test");
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
+        Map<List, String> map = new HashMap<>();
+        List<String> linkedList = new LinkedList<>();
+        List<String> arrayList = new ArrayList<>();
+        for (int i = 0; i < 3; i++) {
+            linkedList.add(String.valueOf(i));
+            arrayList.add(String.valueOf(i));
         }
+
+        map.put(linkedList, "a");
+        map.put(arrayList, "b");
+        map.forEach((key, value) -> {
+            log.info(value);
+        });
     }
 
     /**
@@ -66,5 +75,6 @@ public class SimpleTestDemo {
         }
         return encodeStr;
     }
+
 
 }

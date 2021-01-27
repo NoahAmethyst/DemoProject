@@ -1,4 +1,4 @@
-package com.boot_demo.demo1.config;
+package com.boot_demo.demo1.config.web;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;

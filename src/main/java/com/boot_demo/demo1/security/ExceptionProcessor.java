@@ -1,4 +1,4 @@
-package com.boot_demo.demo1.config;
+package com.boot_demo.demo1.security;
 
 import com.boot_demo.demo1.model.ResponseModel;
 import lombok.extern.slf4j.Slf4j;
@@ -11,13 +11,6 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
-
-import javax.validation.ConstraintViolation;
-import javax.validation.ConstraintViolationException;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Set;
 
 @Slf4j
 @RestControllerAdvice
@@ -33,7 +26,7 @@ public class ExceptionProcessor {
     public final ResponseEntity<ResponseModel> processException(Exception ex, WebRequest request) {
         String requestId = extractRequestId(request);
         log.error("requestId: " + requestId + " " + ex.getLocalizedMessage(), ex);
-        return new ResponseEntity<>(ResponseModel.buildComplete(HttpStatus.INTERNAL_SERVER_ERROR.value(), ex.getMessage()), HttpStatus.OK);
+        return new ResponseEntity<>(ResponseModel.buildComplete(HttpStatus.INTERNAL_SERVER_ERROR.value(), "System error:" + ex.getLocalizedMessage()), HttpStatus.OK);
     }
 
     private String extractRequestId(WebRequest request) {
@@ -65,18 +58,6 @@ public class ExceptionProcessor {
             msg += fieldError.getDefaultMessage() + "!";
         }
         return new ResponseEntity<>(ResponseModel.buildComplete(HttpStatus.BAD_REQUEST.value(), msg), HttpStatus.OK);
-    }
-
-    @ExceptionHandler(ConstraintViolationException.class)
-    public final ResponseEntity<ResponseModel> processConstraintViolationExceptionn(ConstraintViolationException e) {
-        Set<ConstraintViolation<?>> constraintViolations = e.getConstraintViolations();
-        Iterator<ConstraintViolation<?>> iterator = constraintViolations.iterator();
-        List<String> msgList = new ArrayList<>();
-        while (iterator.hasNext()) {
-            ConstraintViolation<?> cvl = iterator.next();
-            msgList.add(cvl.getMessageTemplate());
-        }
-        return new ResponseEntity<>(ResponseModel.buildComplete(HttpStatus.BAD_REQUEST.value(), String.join(",",msgList)), HttpStatus.OK);
     }
 
 }

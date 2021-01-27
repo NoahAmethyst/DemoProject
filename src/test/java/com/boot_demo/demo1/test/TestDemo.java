@@ -1,7 +1,6 @@
 package com.boot_demo.demo1.test;
 
 
-import com.boot_demo.demo1.service.CounterService;
 import com.boot_demo.demo1.test.service.TicketService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -19,8 +18,6 @@ public class TestDemo {
     @Resource
     private TicketService ticketService;
 
-    @Resource
-    private CounterService counterService;
 
 
     @Test

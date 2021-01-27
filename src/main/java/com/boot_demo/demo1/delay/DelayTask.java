@@ -7,11 +7,11 @@ import java.util.concurrent.TimeUnit;
 
 
 @Data
-public class DelayTask implements Delayed {
+public class DelayTask<T> implements Delayed {
 
-    private TaskElement data;
+    private T data;
 
-    private long expire = System.currentTimeMillis() + 3000;
+    private long expire;
 
     /**
      * 构造延时任务
@@ -19,8 +19,9 @@ public class DelayTask implements Delayed {
      * @param data   业务数据
      * @param expire 任务延时时间（ms）
      */
-    public DelayTask(TaskElement data) {
+    public DelayTask(T data, long expire) {
         super();
+        this.expire = System.currentTimeMillis() + expire;
         this.data = data;
     }
 

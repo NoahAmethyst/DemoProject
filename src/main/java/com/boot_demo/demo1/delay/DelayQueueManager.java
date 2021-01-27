@@ -4,14 +4,12 @@ package com.boot_demo.demo1.delay;
 import com.alibaba.fastjson.JSONObject;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
-import org.springframework.stereotype.Component;
 
 import java.util.concurrent.DelayQueue;
 import java.util.concurrent.Executors;
 
-@Component
 @Slf4j
-public class DelayQueueManager implements CommandLineRunner {
+public abstract class DelayQueueManager<T> implements CommandLineRunner {
     private DelayQueue<DelayTask> delayQueue = new DelayQueue<>();
 
     /**
@@ -19,9 +17,9 @@ public class DelayQueueManager implements CommandLineRunner {
      *
      * @param
      */
-    public void put(TaskElement element) {
+    public void put(T element, long expire) {
         log.info("加入延时任务：{}", JSONObject.toJSONString(element));
-        DelayTask delayTask = new DelayTask(element);
+        DelayTask delayTask = new DelayTask(element, expire);
         delayTask.setData(element);
         this.delayQueue.put(delayTask);
     }
@@ -35,16 +33,6 @@ public class DelayQueueManager implements CommandLineRunner {
     public boolean remove(DelayTask task) {
         log.info("取消延时任务：{}", task);
         return delayQueue.remove(task);
-    }
-
-    /**
-     * 取消延时任务
-     *
-     * @param taskid
-     * @return
-     */
-    public boolean remove(String taskid) {
-        return remove(new DelayTask(new TaskElement(taskid)));
     }
 
     @Override
@@ -72,8 +60,5 @@ public class DelayQueueManager implements CommandLineRunner {
      *
      * @param task
      */
-    private void processTask(DelayTask task) {
-        log.info("执行延时任务：{}", JSONObject.toJSONString(task));
-        //根据task中的data自定义数据来处理相关逻辑，例 if (task.getData() instanceof XXX) {}
-    }
+    abstract void processTask(DelayTask task);
 }

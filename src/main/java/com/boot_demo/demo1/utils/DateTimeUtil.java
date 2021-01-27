@@ -17,6 +17,7 @@ public class DateTimeUtil {
     public static final String TIMESTAMP_FORMAT_STRING_STANDARD = "yyyy-MM-dd HH:mm:ss";
     public static final String GREENWICH_FORMAT_STANDARD = "yyyy-MM-dd'T'HH:mm:ssZ";
     public static final String GREENWICH_FORMAT_STANDARD_2 = "yyyy-MM-dd'T'HH:mm:ss.SSS";
+    public static final String GREENWICH_FORMAT_STANDARD_3 = "yyyy-MM-dd HH:mm:ss.SSS";
 
     public static String formatDate(Date date, String format) {
         if (date == null) {
@@ -40,7 +41,8 @@ public class DateTimeUtil {
         try {
             return dateFormat.parse(dateStr);
         } catch (Exception e) {
-            log.error("string2date错误", e);
+            log.warn("wrong string format:{}", dateStr);
+            log.error("string to date error:{}", e.getMessage());
             return Calendar.getInstance().getTime();
         }
     }
@@ -153,6 +155,10 @@ public class DateTimeUtil {
         return differHours(bigDate.getTime(), smallDate.getTime());
     }
 
+    public static Integer differMinutes(Date bigDate, Date smallDate) {
+        return differMinutes(bigDate.getTime(), smallDate.getTime());
+    }
+
     public static Integer differHours(long bigDate, long smallDate) {
         Integer differHours = new Integer(0);
         try {
@@ -162,6 +168,25 @@ public class DateTimeUtil {
             log.error(e.getMessage());
         }
         return differHours;
+    }
+
+    public static Integer differMinutes(long bigDate, long smallDate) {
+        Integer differMinutes = new Integer(0);
+        try {
+            long diff = bigDate - smallDate;
+            differMinutes = Math.toIntExact(diff / (1000 * 60));
+        } catch (Exception e) {
+            log.error(e.getMessage());
+        }
+        return differMinutes;
+    }
+
+    public static Date secondsToDate(long timestamp) {
+        return new Date(timestamp * 1000);
+    }
+
+    public static Date msToDate(long timestamp) {
+        return new Date(timestamp);
     }
 
 

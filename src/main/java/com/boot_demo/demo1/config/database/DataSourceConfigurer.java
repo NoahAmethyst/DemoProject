@@ -1,4 +1,4 @@
-package com.boot_demo.demo1.config;
+package com.boot_demo.demo1.config.database;
 
 import com.alibaba.druid.pool.DruidDataSource;
 import org.mybatis.spring.SqlSessionFactoryBean;
@@ -9,11 +9,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 
-/**
- * @Description
- * @Date 2020/7/23
- * @Created by ZhonghaoMa
- */
+
 @Configuration
 public class DataSourceConfigurer {
 
