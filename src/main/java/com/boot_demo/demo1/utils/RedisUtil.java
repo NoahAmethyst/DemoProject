@@ -367,4 +367,17 @@ public final class RedisUtil {
     }
 
 
+    // ============================set=============================
+
+    public void zStringSet(String key, String value, int score) {
+        try {
+            redisStringTemplate.opsForZSet().add(key, value, score);
+        } catch (Exception e) {
+            log.error("add set key:{} value:{} score:{} error:{}", key, value, score, e.getMessage());
+        }
+    }
+
+
+
+
 }

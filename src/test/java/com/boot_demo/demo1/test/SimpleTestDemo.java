@@ -4,16 +4,25 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.junit.Test;
 
+import java.io.UnsupportedEncodingException;
 import java.util.*;
 
 @Slf4j
 public class SimpleTestDemo {
 
     @Test
-    public void simpleTest() {
-        String value = "dz0WsVKYiEyvtoZ2Iat19u:APA91bE-uZ6jcRSRMGrlRsyKsnZbpYYmGgaae5VbjfpwOrAXUch3TOmBIUVe4m6OfF7wWhjjd-9cNBr2UnPAALrLZTs_9Rbpzjw-SbaOwOtGTkgLuXo6xZkHT-Gt6wv760vlkMq8PXPi";
-        String value2 = "dz0WsVKYiEyvtoZ2Iat19u:APA91bE-uZ6jcRSRMGrlRsyKsnZbpYYmGgaae5VbjfpwOrAXUch3TOmBIUVe4m6OfF7wWhjjd-9cNBr2UnPAALrLZTs_9Rbpzjw-SbaOwOtGTkgLuXo6xZkHT-Gt6wv760vlkMq8PXPi";
-        System.out.println(value.equals(value2));
+    public void simpleTest() throws UnsupportedEncodingException {
+
+        int x = 5349053;
+
+        String s = "20000000000000000000";
+
+        log.info("{}", myAtoi(s));
+
+    }
+
+    public int myAtoi(String s) {
+        return 0;
     }
 
 

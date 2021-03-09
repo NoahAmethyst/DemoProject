@@ -31,13 +31,13 @@ public abstract class DelayQueueManager<T> implements CommandLineRunner {
      * @return
      */
     public boolean remove(DelayTask task) {
-        log.info("取消延时任务：{}", task);
+        log.info("cancel delay task：{}", task);
         return delayQueue.remove(task);
     }
 
     @Override
     public void run(String... args) throws Exception {
-        log.info("初始化延时队列");
+        log.info("initialize the delay queue.");
         Executors.newSingleThreadExecutor().execute(new Thread(this::excuteThread));
     }
 
