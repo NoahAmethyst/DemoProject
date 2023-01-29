@@ -10,15 +10,16 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
 
-@Configuration
+//@Configuration
 public class RedisConfiguration {
-//    @Value("${redis.node.maxTotal}")
-    private Integer maxTotal=8;
+    //    @Value("${redis.node.maxTotal}")
+    private Integer maxTotal = 8;
     @Value("${spring.redis.host}")
     private String host;
     @Value("${spring.redis.port}")
     private Integer port;
-    public JedisPoolConfig jedisPoolConfig(){    //这个是修改redis性能的时候需要的对象
+
+    public JedisPoolConfig jedisPoolConfig() {    //这个是修改redis性能的时候需要的对象
         JedisPoolConfig jedisPoolConfig = new JedisPoolConfig();
         jedisPoolConfig.setMaxTotal(maxTotal);
 
@@ -26,7 +27,7 @@ public class RedisConfiguration {
     }
 
     @Bean  //这个注解注入工厂的名称是方法名
-    public JedisPool jedisPool(){
+    public JedisPool jedisPool() {
         JedisPoolConfig jedisPoolConfig = jedisPoolConfig();
         return new JedisPool(jedisPoolConfig,host,port);
     }

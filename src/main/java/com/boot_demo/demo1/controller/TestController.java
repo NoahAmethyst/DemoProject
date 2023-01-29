@@ -55,9 +55,7 @@ public class TestController {
 
     @GetMapping(value = "/delayQueue")
     public ResponseModel delayQueue() {
-        for (int i = 0; i < 10; i++) {
-            testDelayService.put("this is a element", 1000);
-        }
+        testDelayService.put("this is a element", 1000);
         return ResponseModel.buildSuccess();
     }
 

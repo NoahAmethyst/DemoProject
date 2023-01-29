@@ -2,7 +2,9 @@ package com.boot_demo.demo1.delay;
 
 
 import com.alibaba.fastjson.JSONObject;
+import lombok.Builder;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.poi.ss.formula.functions.T;
 import org.springframework.boot.CommandLineRunner;
 
 import java.util.concurrent.DelayQueue;
@@ -10,19 +12,14 @@ import java.util.concurrent.Executors;
 
 @Slf4j
 public abstract class DelayQueueManager<T> implements CommandLineRunner {
-    private DelayQueue<DelayTask> delayQueue = new DelayQueue<>();
+    public DelayQueue<DelayTask> delayQueue = new DelayQueue<>();
 
     /**
      * 加入到延时队列中
      *
      * @param
      */
-    public void put(T element, long expire) {
-        log.info("加入延时任务：{}", JSONObject.toJSONString(element));
-        DelayTask delayTask = new DelayTask(element, expire);
-        delayTask.setData(element);
-        this.delayQueue.put(delayTask);
-    }
+    abstract void put(T element, long expire);
 
     /**
      * 取消延时任务
@@ -47,7 +44,7 @@ public abstract class DelayQueueManager<T> implements CommandLineRunner {
     private void excuteThread() {
         while (true) {
             try {
-                DelayTask task = delayQueue.take();
+                DelayTask<T> task = delayQueue.take();
                 processTask(task);
             } catch (InterruptedException e) {
                 break;
@@ -60,5 +57,5 @@ public abstract class DelayQueueManager<T> implements CommandLineRunner {
      *
      * @param task
      */
-    abstract void processTask(DelayTask task);
+    abstract void processTask(DelayTask<T> task);
 }

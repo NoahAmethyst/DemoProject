@@ -19,7 +19,6 @@ public class TestDemo {
     private TicketService ticketService;
 
 
-
     @Test
     public void asynTest() {
         System.out.println("这是一个异步测试，这里是开始");
@@ -30,6 +29,19 @@ public class TestDemo {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+    }
+
+    @Test
+    public void equalTest() {
+        Integer a = 128, b = 128, c = 127, d = 127;
+        System.out.println(a == b);
+        System.out.println(c == d);
+        try {
+            wait();
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 
 
