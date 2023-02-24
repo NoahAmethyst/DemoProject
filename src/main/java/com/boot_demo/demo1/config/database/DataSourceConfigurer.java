@@ -2,12 +2,18 @@ package com.boot_demo.demo1.config.database;
 
 import com.alibaba.druid.pool.DruidDataSource;
 import org.mybatis.spring.SqlSessionFactoryBean;
+import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.factory.config.YamlPropertiesFactoryBean;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
+import org.springframework.stereotype.Component;
+
+import javax.sql.DataSource;
 
 
 @Configuration
@@ -64,5 +70,5 @@ public class DataSourceConfigurer {
         sqlSessionFactoryBean.setTypeAliasesPackage("com.example.entity.*");
         return sqlSessionFactoryBean;
     }
-
 }
+

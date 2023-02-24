@@ -1,12 +1,8 @@
 package com.boot_demo.demo1.delay;
 
 
-import com.alibaba.fastjson.JSONObject;
-import lombok.Builder;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.poi.ss.formula.functions.T;
 import org.springframework.boot.CommandLineRunner;
-
 import java.util.concurrent.DelayQueue;
 import java.util.concurrent.Executors;
 
@@ -16,8 +12,6 @@ public abstract class DelayQueueManager<T> implements CommandLineRunner {
 
     /**
      * 加入到延时队列中
-     *
-     * @param
      */
     abstract void put(T element, long expire);
 

@@ -1,5 +1,6 @@
 package com.boot_demo.demo1.controller;
 
+import com.boot_demo.demo1.delay.DelayQueueManager;
 import com.boot_demo.demo1.delay.TestDelayService;
 import com.boot_demo.demo1.model.ResponseModel;
 import com.boot_demo.demo1.service.demo.DemoService;
@@ -28,11 +29,10 @@ public class TestController {
     private RedisUtil redisUtil;
 
     @Resource
-    private TestDelayService testDelayService;
-
-    @Resource
     private ImageUtil imageUtil;
 
+    @Resource
+    private TestDelayService testDelayService;
     @Resource
     private DemoService demoService;
 

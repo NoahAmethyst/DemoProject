@@ -4,12 +4,13 @@ package com.boot_demo.demo1.test.model;
 import lombok.Builder;
 import lombok.Data;
 
+import java.util.Comparator;
 import java.util.Objects;
 
 
 @Data
 @Builder
-public class NodeModel  implements Comparable<NodeModel> {
+public class NodeModel implements Comparable<NodeModel>, Comparator<NodeModel> {
 
     private int a;
 
@@ -21,7 +22,17 @@ public class NodeModel  implements Comparable<NodeModel> {
 
     private long timestamp;
 
-    private int isCover=0;
+    private int isCover = 0;
+
+    @Override
+    public int compare(NodeModel o1, NodeModel o2) {
+        if (o1.index == o2.index) {
+            return 0;
+        }
+        return o1.index - o2.index > 0 ? 1 : -1;
+
+
+    }
 
     @Override
     public boolean equals(Object o) {
